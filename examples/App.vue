@@ -35,6 +35,9 @@ export default {
   -webkit-font-smoothing: antialiased;
   padding: 20px 2%;
 }
+body {
+  margin: 0;
+}
 </style>
 <style scoped>
 #app {

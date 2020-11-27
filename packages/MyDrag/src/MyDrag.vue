@@ -1,5 +1,5 @@
 <template>
-  <div onselectstart="return false;" class="my-drag">
+  <div onselectstart="return false;" class="my-drag" :style="{height: initHeight, width: initWidth}">
     <div v-drag class="drag-inner" :style="{top: initTop, left: initLeft}">
       <slot />
     </div>
@@ -8,26 +8,31 @@
 <script>
 export default {
   name: 'MyDrag',
-  props: {
-    initTop: {
-      type: String,
-      default: '50%'
-    },
-    initLeft: {
-      type: String,
-      default: 'calc(100% - 150px)'
-    }
-  },
   directives: {
     drag: {
       bind: function(el, binding, vnode) {
         const moveEl = el
+        let width = document.documentElement.clientWidth > document.body.offsetWidth ? document.documentElement.clientWidth : document.body.offsetWidth
+        let height = document.documentElement.clientHeight > document.body.offsetHeight ? document.documentElement.clientHeight : document.body.offsetHeight
+        window.onresize = () => {
+          height = document.body.offsetHeight
+          width = document.body.offsetWidth + window.scrollX === width ? width : document.body.offsetWidth + window.scrollX
+          vnode.context.initHeight = height + 'px'
+          vnode.context.initWidth = width + 'px'
+          if (moveEl.getBoundingClientRect().x > document.documentElement.clientWidth) {
+            moveEl.style.left = width - 20 + 'px'
+          }
+          if (height < moveEl.getBoundingClientRect().bottom + window.scrollY) {
+            moveEl.style.top = height - 20 + 'px'
+          }
+        }
         moveEl.onmousedown = (event) => {
           const disX = event.clientX - moveEl.offsetLeft
           const disY = event.clientY - moveEl.offsetTop
           vnode.context.$emit('drag-start', event)
-          const innerContainer = document.querySelector('.drag-inner')
           document.onmousemove = (dEvent) => {
+            height = document.body.offsetHeight === height ? height : document.body.offsetHeight
+            width = document.body.offsetWidth + window.scrollX === width ? width : document.body.offsetWidth + window.scrollX
             const left = dEvent.clientX - disX
             const top = dEvent.clientY - disY
             moveEl.style.left = left + 'px'
@@ -36,16 +41,15 @@ export default {
           document.onmouseup = (event) => {
             document.onmousemove = null
             document.onmouseup = null
-            let left = event.clientX
-            let top = event.clientY
-            console.info(left, innerContainer.offsetWidth - 20, top, document.documentElement.clientHeight - 20)
-            left = left > document.documentElement.clientWidth - innerContainer.offsetWidth ? document.documentElement.clientWidth - 20
-              : left < innerContainer.offsetWidth - 20 ? -(innerContainer.offsetWidth - 20) : left
-            console.info('aa', left, -(innerContainer.offsetWidth - 20))
-            top = left === document.documentElement.clientWidth - 20 || left === -(innerContainer.offsetWidth - 20) ? (top < 0 ? 0
-              : top > document.documentElement.clientHeight - innerContainer.offsetHeight ? document.documentElement.clientHeight - innerContainer.offsetHeight : top)
-              : top < innerContainer.offsetHeight - 20 ? -(innerContainer.offsetHeight - 20)
-                : top > document.documentElement.clientHeight - 20 ? document.documentElement.clientHeight - 20 : top
+            const box = moveEl.getBoundingClientRect()
+            let left = window.scrollX + box.x
+            let top = window.scrollY + box.y
+            left = left > width - moveEl.offsetWidth ? width - 20
+              : left < -(moveEl.offsetWidth - 20) || left < 0 ? -(moveEl.offsetWidth - 20) : left
+            top = left === width - 20 || left === -(moveEl.offsetWidth - 20) ? (top < 0 ? 0
+              : top > height - moveEl.offsetHeight ? height - moveEl.offsetHeight : top)
+              : top < -(moveEl.offsetHeight - 20) || top < 0 ? -(moveEl.offsetHeight - 20)
+                : top > height - moveEl.offsetHeight ? height - 20 : top
             moveEl.style.left = left + 'px'
             moveEl.style.top = top + 'px'
             vnode.context.$emit('drag-end', event)
@@ -54,10 +58,25 @@ export default {
       }
     }
   },
+  props: {
+    initTop: {
+      type: String,
+      default: '20%'
+    },
+    initLeft: {
+      type: String,
+      default: 'calc(100% - 150px)'
+    }
+  },
   data: function() {
     return {
-      hide: false
+      initHeight: '100vh',
+      initWidth: '100%'
     }
+  },
+  mounted: function() {
+    this.initHeight = document.body.offsetHeight + 'px'
+    this.initWidth = document.body.offsetWidth + 'px'
   }
 }
 </script>
