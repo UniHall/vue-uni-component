@@ -40,23 +40,11 @@ const webpackConfig = {
 
               render: function(tokens, idx) {
                 if (tokens[idx].nesting === 1) {
-                  // 1.获取第一行的内容使用markdown渲染html作为组件的描述
-                  const demoInfo = tokens[idx].info.trim().match(/^demo\s+(.*)$/)
-                  const description =
-                    demoInfo && demoInfo.length > 1 ? demoInfo[1] : ''
-                  const descriptionHTML = description
-                    ? markdownRender.render(description)
-                    : ''
-                  // 2.获取代码块内的html和js代码
-                  const content = tokens[idx + 1].content
-                  // 3.使用自定义开发组件【DemoBlock】来包裹内容并且渲染成案例和代码示例
-                  return `<demo-block>
-          <div class="source" slot="source">${content}</div>
-          ${descriptionHTML}
-          <div class="highlight" slot="highlight">`
-                } else {
-                  return '</div></demo-block>\n'
+                  const content = tokens[idx + 1].type === 'fence' ? tokens[idx + 1].content : ''
+                  // 先把demo中的代码放到demo-block的之中，然后程序继续render fence，按照上面的fence规则渲染出代码部分，作为隐藏的查看代码。
+                  return `<demo-block><div class="kv-demo">${content}</div>`
                 }
+                return '</demo-block>'
               }
             }
           ]

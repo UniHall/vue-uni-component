@@ -4,10 +4,14 @@ import Vue from 'vue'
 Vue.use(ElementUI, { size: 'small' })
 
 import MyTable from '@/MyTable'
+import MyAnchor from '@/MyAnchor'
+import MyDrag from '@/MyDrag'
 import './style/common.scss'
 
 const components = [
-  MyTable
+  MyTable,
+  MyAnchor,
+  MyDrag
 ]
 const install = function(Vue) {
   if (install.installed) return
@@ -19,7 +23,9 @@ if (typeof window !== 'undefined' && window.Vue) {
 }
 export {
   install,
-  MyTable
+  MyTable,
+  MyAnchor,
+  MyDrag
 }
 export default {
   install,

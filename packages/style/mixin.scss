@@ -1,0 +1,14 @@
+@mixin text-overflow {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+@mixin fix-position {
+  position: fixed;
+  /** 兼容ie，解决ie下fixed定位抖动问题 */
+  -webkit-transform: translateZ(0);
+  transform: translateY(-50%);
+  right: 0;
+  top: 50%;
+  z-index: 999;
+}

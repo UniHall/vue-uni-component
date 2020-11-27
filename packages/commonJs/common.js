@@ -1,6 +1,6 @@
 export function filterDictNameByCode(dictCode, dictList, codeProp = 'code', labelProp = 'label') {
   const res = dictList.find(item => item[codeProp] === dictCode)
-  return res ? res[labelProp] : ''
+  return res ? res[labelProp] : dictCode
 }
 /**
  * 将字符串格式化为千分符格式的字符串

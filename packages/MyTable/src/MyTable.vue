@@ -12,23 +12,36 @@
       @selection-change="handleSelectionChange"
     >
       <el-table-column
+        v-if="columnList.filter(column => column.type === 'expand').length > 0"
+        type="expand"
+        :width="columnList.filter(column => column.type === 'expand')[0].width || 55"
+      >
+        <template slot-scope="scope">
+          <slot name="expand" :row="scope.row" />
+        </template>
+      </el-table-column>
+      <el-table-column
         v-if="columnList.filter(column => column.type === 'checkbox').length > 0"
         type="selection"
         :reserve-selection="reserveSelection"
         :width="columnList.filter(column => column.type === 'checkbox')[0].width || 55"
       />
       <el-table-column
-        v-for="column in columnList.filter(column => column.type !== 'checkbox')"
+        v-if="columnList.filter(column => column.type === 'index').length > 0"
+        type="index"
+        :width="columnList.filter(column => column.type === 'index')[0].width || 55"
+      />
+      <el-table-column
+        v-for="column in columnList.filter(column => !['checkbox', 'expand', 'index'].includes(column.type))"
         :key="column.prop || null"
         :prop="column.prop || null"
         :label="column.label || null"
         :width="column.width"
         :header-align="column.headerAlign || 'center'"
         :align="column.align || 'center'"
-        :type="column.type === 'expand' ? 'expand' : (column.type === 'index' ? 'index' : null)"
       >
         <template slot-scope="scope">
-          <slot :row="scope.row">
+          <slot name="cell" :row="scope.row" :prop="column.prop">
             <el-radio
               v-if="column.type === 'radio'"
               v-model="selectedRadio"
@@ -67,9 +80,9 @@
             >
               <span v-for="(operation, index) in column.operations" :key="index" class="table-button">
                 <el-button
-                  v-if="operation.type !== 'more' && !(operation.notShow && operation.notShow.value.includes(scope.row[operation.notShow.prop]))"
+                  v-if="operation.type !== 'more' && checkShowButton(operation, scope.row)"
                   type="text"
-                  :class="'text-button-' + operation.type"
+                  :class="operation.type ? 'text-button-' + operation.type : 'text-button-primary'"
                   size="mini"
                   :icon="operation.buttonIcon"
                   @click="handleButton(operation.key, scope.row)"
@@ -77,7 +90,7 @@
                   {{ operation.label }}
                 </el-button>
                 <el-dropdown
-                  v-else-if="operation.type === 'more' && !(operation.notShow && operation.notShow.value.includes(scope.row[operation.notShow.prop]))"
+                  v-else-if="operation.type === 'more' && checkShowButton(operation, scope.row)"
                   :trigger="operation.trigger || 'hover'"
                   @command="handleMoreButton"
                 >
@@ -87,9 +100,9 @@
                   <el-dropdown-menu slot="dropdown">
                     <span v-for="childOperation in operation.childOperations" :key="childOperation.key">
                       <el-dropdown-item
-                        v-if="childOperation.type !== 'more' && !(childOperation.notShow && childOperation.notShow.value.includes(scope.row[childOperation.notShow.prop]))"
+                        v-if="childOperation.type !== 'more' && checkShowButton(childOperation, scope.row)"
                         :icon="childOperation.buttonIcon"
-                        :class="'text-button-' + childOperation.type"
+                        :class="childOperation.type ? 'text-button-' + childOperation.type : 'text-button-primary'"
                         :command="{ key: childOperation.key, row: scope.row, type: childOperation.type }"
                       >
                         {{ childOperation.label }}
@@ -171,28 +184,14 @@ export default {
       default: 1000
     },
     // 自定义单元格类
-    customCellClass: {
-      type: Array,
-      default: function() {
-        return []
-      }
+    cellClassName: {
+      type: [String, Function],
+      default: ''
     },
     // 自定义表头单元格类
-    customHeaderClass: {
-      type: Array,
-      default: function() {
-        return []
-      }
-    },
-    // 自定义表格单元格样式类
-    customCellClassFunc: {
-      type: Function,
-      default: () => { return '' }
-    },
-    // 自定义表头单元格样式类
-    customHeaderClassFunc: {
-      type: Function,
-      default: () => { return '' }
+    headerCellClassName: {
+      type: [String, Function],
+      default: ''
     },
     // 字典列表
     dictList: {
@@ -230,9 +229,6 @@ export default {
   watch: {
     data: function(newVal) {
       this.initMergeRow()
-    },
-    columnList: function() {
-      this.filterColumn()
     }
   },
   created: function() {
@@ -240,14 +236,8 @@ export default {
       this.changeInitSize()
     }
     this.initMergeRow()
-    this.filterColumn()
   },
   methods: {
-    // 过滤隐藏列
-    filterColumn: function() {
-      const columnList = this.columnList.filter(column => { return !column.hidden })
-      this.showColumnList = columnList
-    },
     // 修改页容量数组，由于默认页容量可选下拉框中的值为10,20,30,40,80;若用户自定义页容量不在这几个值中，需要向下拉框中添加自定义页容量的值
     changeInitSize: function() {
       if (!this.pageSizes.includes(this.pageable.size)) {
@@ -304,17 +294,19 @@ export default {
     },
     // 单元格类拼接
     cellNameFilter: function({ row, column, rowIndex, columnIndex }) {
-      const cellClass = ['common-table-cell'].concat(this.customCellClass).join(' ')
-      if (this.customCellClassFunc) {
-        return cellClass + ' ' + this.customCellClassFunc({ row, column, rowIndex, columnIndex })
+      const cellName = 'common-table-cell'
+      if (this.cellClassName) {
+        return cellName + typeof this.cellClassName === 'function' ? ('' + this.cellClassName({ row, column, rowIndex, columnIndex })) : ('' + this.cellClassName)
       }
+      return cellName
     },
     // 表头单元格类拼接
     headerNameFilter: function({ row, column, rowIndex, columnIndex }) {
-      const headerClass = ['common-table-cell', 'common-header-cell'].concat(this.customHeaderClass).join(' ')
-      if (this.customHeaderClassFunc) {
-        return headerClass + ' ' + this.customHeaderClassFunc({ row, column, rowIndex, columnIndex })
+      const headerClass = 'common-table-cell common-header-cell'
+      if (this.headerCellClassName) {
+        return headerClass + typeof this.headerCellClassName === 'function' ? ('' + this.headerCellClassName({ row, column, rowIndex, columnIndex })) : ('' + this.headerCellClassName)
       }
+      return headerClass
     },
     // 初始化需要合并的单元格
     initMergeRow: function() {
@@ -397,6 +389,29 @@ export default {
     // 格式化金额
     formatMoney: function(money) {
       return formatMoneyStr(money ? money + '' : '')
+    },
+    checkShowButton: function(operation, row) {
+      let show = true
+      if (!operation.notShow) {
+        return show
+      }
+      if (operation.notShowJoinType && operation.notShowJoinType === 'or') {
+        operation.notShow.forEach((filter) => {
+          if (filter.value.includes(row[filter.prop])) {
+            show = false
+            return
+          }
+        })
+      } else {
+        show = false
+        operation.notShow.forEach((filter) => {
+          if (!filter.value.includes(row[filter.prop])) {
+            show = true
+            return
+          }
+        })
+      }
+      return show
     }
   }
 }

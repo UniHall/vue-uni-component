@@ -114,7 +114,7 @@ parser.renderer.rules.fence = (tokens, idx, options, env, self) => {
 
 // 给table增加样式
 parser.renderer.rules.table_open = function() {
-  return '<table class="table">'
+  return '<table class="md-table">'
 }
 
 // ```code`` 给这种样式加个class code_inline
@@ -139,6 +139,17 @@ parser.use(require('markdown-it-container'), 'demo', {
     return '</demo-block>'
   }
 })
+
+const slugify = require('transliteration').slugify
+parser.use(require('markdown-it-anchor'), {
+  level: 2, // 添加超链接锚点的最小标题级别, 如: #标题 不会添加锚点
+  slugify: slugify, // 自定义slugify, 我们使用的是将中文转为汉语拼音,最终生成为标题id属性
+  permalink: true, // 开启标题锚点功能
+  permalinkBefore: true // 在标题前创建锚点
+})
+
+parser.use(require('markdown-it-container'), 'tip')
+parser.use(require('markdown-it-container'), 'warning')
 
 module.exports = function(source) {
   this.cacheable && this.cacheable()

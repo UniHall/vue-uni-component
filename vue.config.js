@@ -22,9 +22,9 @@ function getEntries(path) {
   }, {})
   return entries
 }
-
+// const md = require('markdown-it')()
+// const slugify = require('transliteration').slugify
 const devConfig = {
-  runtimeCompiler: true,
   pages: {
     index: {
       entry: 'examples/main.js',
@@ -37,21 +37,17 @@ const devConfig = {
       extensions: ['.js', '.vue', '.json'],
       alias: {
         '@': resolve('packages'),
+        '~': resolve('examples'),
         'assets': resolve('examples/assets'),
         'views': resolve('examples/views')
       }
     }
   },
+  runtimeCompiler: true,
   devServer: {
     port: 8084,
     hot: true,
-    open: 'Google Chrome',
-    proxy: {
-      '/': {
-        target: 'http://localhost:8090',
-        changeOrigin: true
-      }
-    }
+    open: 'Google Chrome'
   },
   chainWebpack: config => {
     config.module
@@ -62,6 +58,52 @@ const devConfig = {
       .end()
       .use('vue-markdown-loader')
       .loader('./markdown.js')
+      // .loader('vue-markdown-loader/lib/markdown-compiler')
+      .options({
+        raw: true,
+        preventExtract: true // 这个加载器将自动从html令牌内容中提取脚本和样式标签
+        //   // 定义处理规则
+        //   preprocess: (MarkdownIt, source) => {
+        //     // 对于markdown中的table,
+        //     MarkdownIt.renderer.rules.table_open = function() {
+        //       return '<table class="md-table">'
+        //     }
+        //     // 对于代码块去除v - pre, 添加高亮样式;
+        //     const defaultRender = md.renderer.rules.fence
+        //     MarkdownIt.renderer.rules.fence = (tokens, idx, options, env, self) => {
+        //       const token = tokens[idx]
+        //       // 判断该 fence 是否在 :::demo 内
+        //       const prevToken = tokens[idx - 1]
+        //       const isInDemoContainer = prevToken && prevToken.nesting === 1 && prevToken.info.trim().match(/^demo\s*(.*)$/)
+        //       if (token.info === 'html' && isInDemoContainer) {
+        //         return `<template slot="highlight">
+        //               ${defaultRender(tokens, idx, options, env, self)}
+        //             </template>`
+        //       }
+        //       return `<div class="code-common">${defaultRender(tokens, idx, options, env, self)}</div>`
+        //     }
+        //     const code_inline = md.renderer.rules.code_inline
+        //     MarkdownIt.renderer.rules.code_inline = function(...args) {
+        //       args[0][args[1]].attrJoin('class', 'code_inline')
+        //       return code_inline(...args)
+        //     }
+        //     return source
+        //   },
+        // use: [
+        // 标题锚点
+        // [
+        //   require('markdown-it-anchor'),
+        //   {
+        //     level: 2, // 添加超链接锚点的最小标题级别, 如: #标题 不会添加锚点
+        //     slugify: slugify, // 自定义slugify, 我们使用的是将中文转为汉语拼音,最终生成为标题id属性
+        //     permalink: true, // 开启标题锚点功能
+        //     permalinkBefore: true // 在标题前创建锚点
+        //   }
+        // ],
+        // [require('markdown-it-container'), 'tip'],
+        // [require('markdown-it-container'), 'warning']
+        // ]
+      })
     config.module
       .rule('js')
       .include.add(resolve('packages'))

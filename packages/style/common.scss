@@ -382,16 +382,16 @@ button.el-button.is-round{
 }
 
 /* 停用 */
-.text-button-stop {
+.text-button-warn {
   color: #EB9500 !important;
 }
-.text-button-stop:hover {
+.text-button-warn:hover {
   color: #FFA304 !important;
 }
-.text-button-stop:focus {
+.text-button-warn:focus {
   color: #DB8B00 !important;
 }
-.text-button-stop:disabled {
+.text-button-warn:disabled {
   color: #EDCC94 !important;
 }
 
