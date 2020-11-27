@@ -4,7 +4,7 @@
 ```html
 <template>
   <my-drag @drag-start="dragStart" @drag-end="dragEnd">
-    <div onselectstart="return false;" class="test-drag">dragMe</div>
+    <div class="test-drag">dragMe</div>
   </my-drag>
 </template>
 <script>

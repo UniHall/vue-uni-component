@@ -45,7 +45,7 @@ const devConfig = {
   },
   runtimeCompiler: true,
   devServer: {
-    port: 8084,
+    port: 8089,
     hot: true,
     open: 'Google Chrome'
   },
