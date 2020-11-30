@@ -11,10 +11,18 @@
 export default {
   methods: {
     dragStart: function(event) {
-      console.info('drag-start', event)
+      this.$message({
+        type: 'info',
+        message: `拖拽开始，通过console可以查看event参数, ${JSON.stringify(event)}`
+      })
+      console.info('拖拽开始', event)
     },
     dragEnd: function(event) {
-      console.info('drag-end', event)
+      this.$message({
+        type: 'info',
+        message: `拖拽结束，通过console可以查看event参数, ${JSON.stringify(event)}`
+      })
+      console.info('拖拽结束', event)
     }
   }
 }
@@ -32,18 +40,8 @@ export default {
 ### anchor 属性
 | 参数 | 说明 | 类型 | 可选值 | 默认值 |
 | ---- | ---- | ---- | ---- | ---- |
-| anchorList | 锚点列表，无需添加返回顶部锚点，开启返回顶部配置，会自动渲染。详细属性见下方anchorList 属性 | Array | —— | —— |
-| position | 锚点列表位置，top：页面右上角，middle：页面右侧中间，bottom：页面右下角 | String | top/middle/bottom | middle |
-| dynamicAnchor | 是否展示为动态锚点，页面滚动自动定位锚点 | Boolean | —— | true |
-| stepShow | 锚点定位时是否分步滑动到页面中 | Boolean | —— | false |
-| stepHeight | 分步滑动时，每步步长，单位px | Number | —— | 150 |
-| offset | 页面定位锚点的位置相对于页面顶部的偏移量；默认会将锚点位置定位到页面顶部，若想要定位到距离页面顶部一定距离，可以设置此值。单位px | Number | —— | 0 |
-| opacity | 锚点列表是否透明展示 | Boolean | —— | true |
-| openBackTop | 是否展示返回顶部按钮 | Boolean | —— | true |
-
-### anchorList 属性
-| 参数 | 说明 | 类型 | 可选值 | 默认值 |
-| ---- | ---- | ---- | ---- | ---- |
-| id | 锚点的id属性，需要在页面上有对应id属性的dom元素 | String | —— | —— |
-| name | 锚点名称，默认展示的名称 | String | —— | —— |
-| shortName | 锚点收起时展示的名称 | String | —— | —— |
+| initTop | 拖拽组件默认距离页面顶部高度 | String | —— | 50vh |
+| initLeft | 拖拽组件默认距离页面左侧的距离 | String | —— | 0 |
+| minShowWidth | 隐藏时展示的像素宽度 | Number | —— | 20 |
+| hideMinMargin | 距离边框多少像素时可以隐藏 | Number | —— | 0 |
+| hide | 是否自动隐藏 | Boolean | —— | true |
