@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div ref="dragContainer" class="my-drag-group" :style="{ 'grid-template-areas': gridAreas }">
-      <div v-for="(dragData, index) in dragDataList" :key="index" :style="{ 'grid-area': 'area-' + index }" class="drag-item" onselectstart="return false;" @mousedown="dragStart">
+      <div v-for="(dragData, index) in dragDataList" :key="index" v-drag :style="{ 'grid-area': 'area-' + index }" class="drag-item" onselectstart="return false;">
         {{ dragData }}
       </div>
     </div>
@@ -10,6 +10,65 @@
 <script>
 export default {
   name: 'MyDragGroup',
+  directives: {
+    drag: {
+      bind: function(el, binding, vnode) {
+        const moveEl = el
+        moveEl.onmousedown = (event) => {
+          const parentEl = event.path[1]
+          moveEl.style.backgroundColor = 'red'
+          vnode.context.$emit('drag-start', event)
+          console.info('parentEl', parentEl)
+          const disX = event.clientX - moveEl.offsetLeft
+          const disY = event.clientY - moveEl.offsetTop
+          document.onmousemove = (dEvent) => {
+            console.info('*****', moveEl.offsetLeft)
+            // 当拖动时，算出的值就刚好是方块的top和left值
+            let x = dEvent.x - disX
+            let y = dEvent.y - disY
+            if (x < parentEl.offsetLeft) {
+              x = parentEl.offsetLeft
+            } else if (x > parentEl.offsetLeft + parentEl.offsetWidth - moveEl.offsetWidth) {
+              x = parentEl.offsetLeft + parentEl.offsetWidth - moveEl.offsetWidth
+            }
+            if (y < parentEl.offsetTop) {
+              y = parentEl.offsetLeft
+            } else if (y > parentEl.offsetTop + parentEl.offsetHeight - moveEl.offsetHeight) {
+              y = parentEl.offsetTop + parentEl.offsetHeight - moveEl.offsetHeight
+            }
+            moveEl.style.left = x + 'px'
+            moveEl.style.top = y + 'px'
+          }
+          document.onmouseup = (e) => {
+          // 当鼠标抬起时，我们要做的事
+          // 通过点击位置和父级元素的偏移判断方块在哪个区域
+            if (e.clientY - parentEl.offsetTop < 100 && e.clientX - parentEl.offsetLeft < 100) {
+            // 将方块移动到该区域中
+              vnode.context.changeBlock('head1', moveEl)
+            } else if (e.clientY - parentEl.offsetTop > 100 && e.clientX - parentEl.offsetLeft < 100 && e.clientY - parentEl.offsetTop < 200) {
+              this.changeBlock('main1', moveEl)
+            } else if (e.clientY - parentEl.offsetTop > 200 && e.clientX - parentEl.offsetLeft < 100) {
+              this.changeBlock('footer1', moveEl)
+            } else if (e.clientY - parentEl.offsetTop < 100 && e.clientX - parentEl.offsetLeft > 100 && e.clientX - parentEl.offsetLeft < 200) {
+              this.changeBlock('head2', moveEl)
+            } else if (e.clientY - parentEl.offsetTop < 100 && e.clientX - parentEl.offsetLeft > 200) {
+              this.changeBlock('head3', moveEl)
+            } else if (e.clientY - parentEl.offsetTop > 100 && e.clientX - parentEl.offsetLeft > 200 && e.clientY - parentEl.offsetTop < 200) {
+              this.changeBlock('main3', moveEl)
+            } else if (e.clientY - parentEl.offsetTop > 200 && e.clientX - parentEl.offsetLeft > 200) {
+              this.changeBlock('footer3', moveEl)
+            } else if (e.clientY - parentEl.offsetTop > 200 && e.clientX - parentEl.offsetLeft > 100 && e.clientX - parentEl.offsetLeft < 200) {
+              this.changeBlock('footer2', moveEl)
+            } else {
+              this.changeBlock('main2', moveEl)
+            }
+            document.onmousemove = null // 需要把事件监听取消
+            document.onmousedown = null // 需要把事件监听取消
+          }
+        }
+      }
+    }
+  },
   props: {
     dragDataList: {
       type: Array,
@@ -51,85 +110,23 @@ export default {
       }
       this.gridAreas = areaStr
     },
-    dragStart: function(event) {
-      const moveEl = event.target
-      const parentEl = event.path[1]
-      moveEl.style.backgroundColor = 'red'
-      this.$emit('drag-start', event)
-      console.info('parentEl', parentEl)
-      debugger
-      document.onmousemove = (dEvent) => {
-        // 当拖动时，算出的值就刚好是方块的top和left值
-        const left = dEvent.clientX - event.clientX
-        const top = dEvent.clientY - event.clientY
-        switch (moveEl.style.gridArea) {
-          case 'head1 / head1 / head1 / head1':this.rangeOfHead1(left, top, moveEl); break // 实现head1的移动范围
-          case 'head2 / head2 / head2 / head2':this.rangeOfHead2(left, top, moveEl); break // 实现head2的移动范围
-          case 'head3 / head3 / head3 / head3':this.rangeOfHead3(left, top, moveEl); break // 实现head3的移动范围
-          case 'main1 / main1 / main1 / main1':this.rangeOfMain1(left, top, moveEl); break // 实现main1的移动范围
-        }
+    rangeOfEl: function(moveEl, parentEl, dEvent, disX, disY) {
+      let x = dEvent.x + disX
+      let y = dEvent.y + disY
+      if (x < parentEl.offsetLeft) {
+        x = parentEl.offsetLeft
+      } else if (x > parentEl.offsetLeft + parentEl.offsetWidth - moveEl.offsetWidth) {
+        x = parentEl.offsetLeft + parentEl.offsetWidth - moveEl.offsetWidth
       }
-      document.onmouseup = (e) => {
-        // 当鼠标抬起时，我们要做的事
-        // 通过点击位置和父级元素的偏移判断方块在哪个区域
-        if (e.clientY - parentEl.offsetTop < 100 && e.clientX - parentEl.offsetLeft < 100) {
-          // 将方块移动到该区域中
-          this.changeBlock('head1', moveEl)
-        } else if (e.clientY - parentEl.offsetTop > 100 && e.clientX - parentEl.offsetLeft < 100 && e.clientY - parentEl.offsetTop < 200) {
-          this.changeBlock('main1', moveEl)
-        } else if (e.clientY - parentEl.offsetTop > 200 && e.clientX - parentEl.offsetLeft < 100) {
-          this.changeBlock('footer1', moveEl)
-        } else if (e.clientY - parentEl.offsetTop < 100 && e.clientX - parentEl.offsetLeft > 100 && e.clientX - parentEl.offsetLeft < 200) {
-          this.changeBlock('head2', moveEl)
-        } else if (e.clientY - parentEl.offsetTop < 100 && e.clientX - parentEl.offsetLeft > 200) {
-          this.changeBlock('head3', moveEl)
-        } else if (e.clientY - parentEl.offsetTop > 100 && e.clientX - parentEl.offsetLeft > 200 && e.clientY - parentEl.offsetTop < 200) {
-          this.changeBlock('main3', moveEl)
-        } else if (e.clientY - parentEl.offsetTop > 200 && e.clientX - parentEl.offsetLeft > 200) {
-          this.changeBlock('footer3', moveEl)
-        } else if (e.clientY - parentEl.offsetTop > 200 && e.clientX - parentEl.offsetLeft > 100 && e.clientX - parentEl.offsetLeft < 200) {
-          this.changeBlock('footer2', moveEl)
-        } else {
-          this.changeBlock('main2', moveEl)
-        }
-        document.onmousemove = null // 需要把事件监听取消
-        document.onmousedown = null // 需要把事件监听取消
-      }
-    },
-    rangeOfHead1(x, y, moveEl) { // 判断head1格子中的可以移动范围
-      if (x >= 200) {
-        x = 200
-      } else if (x <= 0) {
-        x = 0
-      }
-      if (y >= 200) {
-        y = 200
-      } else if (y <= 0) {
-        y = 0
+      if (y < parentEl.offsetTop) {
+        y = parentEl.offsetLeft
+      } else if (y > parentEl.offsetTop + parentEl.offsetHeight - moveEl.offsetHeight) {
+        y = parentEl.offsetTop + parentEl.offsetHeight - moveEl.offsetHeight
       }
       moveEl.style.left = x + 'px'
       moveEl.style.top = y + 'px'
-      this.positionX = x
-      this.positionY = y
     },
-    rangeOfHead2(x, y, moveEl) { // 判断head2格子中的可以移动范围
-      if (x >= 100) {
-        x = 100
-      } else if (x <= -100) {
-        x = -100
-      }
-      if (y >= 200) {
-        y = 200
-      } else if (y <= 0) {
-        y = 0
-      }
-      moveEl.style.left = x + 'px'
-      moveEl.style.top = y + 'px'
-
-      this.positionX = x
-      this.positionY = y
-    },
-    changeBlock(blockName, moveEl) { // 将方块移入到对应的区域中
+    changeBlock: function(blockName, moveEl) { // 将方块移入到对应的区域中
       this.positionX = 0
       this.positionY = 0
       moveEl.style.gridArea = blockName
@@ -139,17 +136,17 @@ export default {
 </script>
 <style lang="scss" scoped>
   .container {
-    --columnLength: 3;
-    --rowLength: 1;
+    // --columnLength: 3;
     .my-drag-group {
       display: grid;
-      grid-template-columns: repeat(var(--columnLength), 1fr);
+      // grid-template-columns: repeat(var(--columnLength), 1fr);
       gap: 5px 5px;
       justify-content: center;
       align-content: center;
     }
     .drag-item {
       padding: 50px;
+      position: relative;
     }
   }
 </style>

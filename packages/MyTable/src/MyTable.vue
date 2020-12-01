@@ -396,21 +396,21 @@ export default {
       if (notShowType === 'Boolean') {
         return !operation.notShow
       }
-      let show = true
       if (!operation.notShow) {
-        return show
+        return true
       }
       operation.notShow = notShowType === 'Object' ? [operation.notShow] : operation.notShow
       if (notShowType === 'Function') {
         return !operation.notShow()
       }
+      let show = null
       if (operation.notShowJoinType && operation.notShowJoinType.toLowerCase() === 'or') {
         operation.notShow.forEach((filter) => {
           const filterType = Object.prototype.toString.call(filter).split(' ')[1].split(']')[0]
           if (filterType === 'Boolean') {
-            show = show || filter
+            show = show === null ? !filter : show || !filter
           } else if (filterType === 'Function') {
-            show = show || filter()
+            show = show === null ? !filter() : show || !filter()
           } else {
             if (filter.value.includes(row[filter.prop])) {
               show = false
@@ -421,13 +421,12 @@ export default {
           }
         })
       } else {
-        show = false
         operation.notShow.forEach((filter) => {
           const filterType = Object.prototype.toString.call(filter).split(' ')[1].split(']')[0]
           if (filterType === 'Boolean') {
-            show = show && !filter
+            show = show === null ? !filter : show && !filter
           } else if (filterType === 'Function') {
-            show = show && filter()
+            show = show === null ? !filter : show && !filter()
           } else {
             if (!filter.value.includes(row[filter.prop])) {
               show = true
