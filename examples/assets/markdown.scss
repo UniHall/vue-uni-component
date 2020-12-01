@@ -96,6 +96,9 @@ Ported by Fabrício Tavares de Oliveira
     width: 80px;
     text-align: center;
   }
+  td:nth-child(2) {
+    min-width: 800px;
+  }
 }
 a.header-anchor {
   color: transparent;

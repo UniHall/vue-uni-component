@@ -390,23 +390,50 @@ export default {
     formatMoney: function(money) {
       return formatMoneyStr(money ? money + '' : '')
     },
+    // 校验按钮是否展示
     checkShowButton: function(operation, row) {
+      const notShowType = Object.prototype.toString.call(operation.notShow).split(' ')[1].split(']')[0]
+      if (notShowType === 'Boolean') {
+        return !operation.notShow
+      }
       let show = true
       if (!operation.notShow) {
         return show
       }
-      if (operation.notShowJoinType && operation.notShowJoinType === 'or') {
+      operation.notShow = notShowType === 'Object' ? [operation.notShow] : operation.notShow
+      if (notShowType === 'Function') {
+        return !operation.notShow()
+      }
+      if (operation.notShowJoinType && operation.notShowJoinType.toLowerCase() === 'or') {
         operation.notShow.forEach((filter) => {
-          if (filter.value.includes(row[filter.prop])) {
-            show = false
+          const filterType = Object.prototype.toString.call(filter).split(' ')[1].split(']')[0]
+          if (filterType === 'Boolean') {
+            show = show || filter
+          } else if (filterType === 'Function') {
+            show = show || filter()
+          } else {
+            if (filter.value.includes(row[filter.prop])) {
+              show = false
+            }
+          }
+          if (!show) {
             return
           }
         })
       } else {
         show = false
         operation.notShow.forEach((filter) => {
-          if (!filter.value.includes(row[filter.prop])) {
-            show = true
+          const filterType = Object.prototype.toString.call(filter).split(' ')[1].split(']')[0]
+          if (filterType === 'Boolean') {
+            show = show && !filter
+          } else if (filterType === 'Function') {
+            show = show && filter()
+          } else {
+            if (!filter.value.includes(row[filter.prop])) {
+              show = true
+            }
+          }
+          if (show) {
             return
           }
         })

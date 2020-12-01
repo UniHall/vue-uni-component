@@ -3,9 +3,7 @@
 ::: demo
 ```html
 <template>
-  <my-drag @drag-start="dragStart" @drag-end="dragEnd">
-    <div class="test-drag">dragMe</div>
-  </my-drag>
+  <my-drag-group :column="3" />
 </template>
 <script>
 export default {
@@ -37,7 +35,7 @@ export default {
 ```
 :::
 
-### drag 属性
+### anchor 属性
 | 参数 | 说明 | 类型 | 可选值 | 默认值 |
 | ---- | ---- | ---- | ---- | ---- |
 | initTop | 拖拽组件默认距离页面顶部高度 | String | —— | 50vh |

@@ -4,7 +4,7 @@ import HomePage from './docs/README.md'
 import MyTable from './docs/MyTable.md'
 import MyAnchor from './docs/MyAnchor.md'
 import MyDrag from './docs/MyDrag.md'
-// import TestDrag from './components/testDrag'
+import MyDragGroup from './docs/MyDragGroup.md'
 
 Vue.use(VueRouter)
 const routes = [{
@@ -25,6 +25,10 @@ const routes = [{
   path: '/my-vue-component/component/my-drag',
   component: MyDrag,
   name: 'MyDrag'
+}, {
+  path: '/my-vue-component/component/my-drag-group',
+  component: MyDragGroup,
+  name: 'MyDragGroup'
 }]
 const router = new VueRouter({
   routes,

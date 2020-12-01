@@ -557,7 +557,7 @@ export default {
 | type | 按钮类型，more更多类型，默认展示更多图标，鼠标悬停展示更多里面的按钮 | String | success/warn/danger/primary/more | primary |
 | label | 按钮展示名称 | String | —— | —— |
 | key | 按钮key值 | String | —— | —— |
-| notShow | 按钮过滤条件，可配置多个过滤条件，\n 如：[{value: ['XX', 'YY'], prop: 'ZZ'}]表示当满足条件该行中属性ZZ存在于value列表中时，不展示该按钮 | Array | —— | —— |
+| notShow | 按钮过滤条件，Object为一个条件：{value: ['XX', 'YY'], prop: 'ZZ'}，表示当满足条件该行中属性ZZ存在于value列表中时，不展示该按钮;&#10; Array为多个过滤条件，多条件连接方式为下一个属性`notShowJoinType`,如： ```[{value: ['XX', 'YY'], prop: 'ZZ'}, {value: ['AA'], prop: 'CC'}]``` 表示当满足条件该行中属性ZZ存在于value列表,并且/或者属性CC存在于['AA', 'BB']中时，不展示该按钮; &#10; 类型为Boolean时，按照此Boolean值进行判断; &#10; 类型为Function时，按照Function返回值进行判断，返回类型为Boolean | Object/Array/Boolean/Function | —— | —— |
 | notShowJoinType | 按钮过滤条件连接方式 | String | or/and | and |
 | buttonIcon | 按钮图标 | String | 参照element-UI的图标库 | —— |
 | trigger | 更多按钮列表展示方式 | String | hover/click | hover |
