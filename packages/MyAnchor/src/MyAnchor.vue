@@ -186,11 +186,12 @@ export default {
           if (toElement) {
             this.anchorPosition.push({
               id: anchor.id,
-              position: toElement.offsetTop + this.fixedHeader ? -this.headerHeight : this.headerHeight
+              position: toElement.offsetTop + (this.fixedHeader ? -this.headerHeight : this.headerHeight)
             })
           }
         })
       }
+      console.info(this.anchorPosition)
       // 因为页面头部信息是固定高度的，需要在浏览器滚动条滚动页面时，加上头部高度计算定位位置
       const headerHeight = this.fixedHeader ? -this.headerHeight : this.headerHeight
       let scrolled = document.documentElement.scrollTop || document.body.scrollTop

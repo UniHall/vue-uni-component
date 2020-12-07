@@ -1,6 +1,8 @@
 ## MyAnchor 锚点组件使用说明
 ### 仅有返回顶部的anchor
+::: tip
 仅有返回顶部的anchor，则会只有一个返回顶部按钮
+:::
 ::: demo
 ```html
 <template>
@@ -33,11 +35,11 @@
       return {
         anchorList: [{
           id: 'jin-you-fan-hui-ding-bu-de-anchor',
-          name: '第一个锚点',
+          name: '仅有返回顶部的锚点',
           shortName: '一毛'
         }, {
           id: 'pu-tong-anchor',
-          name: '第二个锚点',
+          name: '普通anchor',
           shortName: '二毛'
         }]
       }
@@ -48,6 +50,9 @@
 :::
 
 ### 自定义返回顶部按钮
+::: tip
+在仅有返回顶部按钮时，可以自定义返回顶部按钮的样式
+:::
 ::: demo
 ```html
 <template>
