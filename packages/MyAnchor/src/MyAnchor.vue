@@ -53,7 +53,7 @@ export default {
     // 分布定位每次渲染移动多少像素
     stepHeight: {
       type: Number,
-      default: 150
+      default: 60
     },
     // 锚点位置相对于原位置的偏移量
     offSet: {
@@ -69,6 +69,21 @@ export default {
     openBackTop: {
       type: Boolean,
       default: true
+    },
+    // 是否存在固定页头
+    fixedHeader: {
+      type: Boolean,
+      default: false
+    },
+    // 页头高度
+    headerHeight: {
+      type: Number,
+      default: 0
+    },
+    // 在滚动时是否一直计算锚点位置
+    scrollAlwaysComputePosition: {
+      type: Boolean,
+      default: false
     }
   },
   data: function() {
@@ -98,19 +113,11 @@ export default {
       }
       this.activeAnchor = null
       this.anchorPosition = []
-      this.anchorList.forEach(anchor => {
-        const toElement = document.querySelector('#' + anchor.id)
-        if (toElement) {
-          this.anchorPosition.push({
-            id: anchor.id,
-            position: toElement.offsetTop
-          })
-        }
-      })
       // 如果为动态锚点，自动定位当前所属锚点
       if (this.dynamicAnchor) {
         window.addEventListener('scroll', this.onScroll, true)
         this.onScroll()
+        this.anchorPosition = []
       }
     },
     // 返回顶部
@@ -134,8 +141,8 @@ export default {
       this.activeAnchor = anchor.id
       const toElement = document.querySelector('#' + anchor.id)
       if (toElement) {
-        const headerHeight = this.headerHeight ? this.headerHeight : 0
-        const scrollTop = toElement.offsetTop + this.offSet - headerHeight
+        const headerHeight = this.fixedHeader ? -this.headerHeight : this.headerHeight
+        const scrollTop = toElement.offsetTop + this.offSet + headerHeight
         if (scrollTop === document.documentElement.scrollTop) {
           return
         }
@@ -173,8 +180,19 @@ export default {
       if (this.anchorList.length === 0) {
         return
       }
+      if (this.anchorPosition.length === 0 || this.scrollAlwaysComputePosition) {
+        this.anchorList.forEach(anchor => {
+          const toElement = document.querySelector('#' + anchor.id)
+          if (toElement) {
+            this.anchorPosition.push({
+              id: anchor.id,
+              position: toElement.offsetTop + this.fixedHeader ? -this.headerHeight : this.headerHeight
+            })
+          }
+        })
+      }
       // 因为页面头部信息是固定高度的，需要在浏览器滚动条滚动页面时，加上头部高度计算定位位置
-      const headerHeight = this.headerHeight ? this.headerHeight : 0
+      const headerHeight = this.fixedHeader ? -this.headerHeight : this.headerHeight
       let scrolled = document.documentElement.scrollTop || document.body.scrollTop
       scrolled = Math.ceil(headerHeight + scrolled)
       // 将锚点位置列表根据锚点位置排序
