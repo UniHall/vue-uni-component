@@ -3,10 +3,17 @@
 ::: demo
 ```html
 <template>
-  <my-drag-group :column="3" />
+  <my-drag-group :column="3" :drag-data-list.sync="dragDataList" @drag-start="dragStart" @drag-end="dragEnd">
+    <template v-slot:default="dragData"><div class="drag-data-div" >这是{{ dragData.data }}数据</div></template>
+  </my-drag-group>
 </template>
 <script>
 export default {
+  data: function() {
+    return {
+      dragDataList: ['1', '2', '3', '4', '5', '6']
+    }
+  },
   methods: {
     dragStart: function(event) {
       this.$message({
@@ -15,31 +22,37 @@ export default {
       })
       console.info('拖拽开始', event)
     },
-    dragEnd: function(event) {
+    dragEnd: function(event, dragList) {
       this.$message({
         type: 'info',
-        message: `拖拽结束，通过console可以查看event参数, ${JSON.stringify(event)}`
+        message: `拖拽结束，通过console可以查看event参数, ${JSON.stringify(event)}, ${dragList}`
       })
-      console.info('拖拽结束', event)
+      console.info('拖拽结束', event, dragList)
     }
   }
 }
 </script>
 <style scoped>
-.test-drag {
-  padding: 50px;
-  background-color: #149ef1;
-  width: 50px;
+.drag-data-div {
+  background-color: green;
+  color: #FFFFFF;
 }
 </style>
 ```
 :::
 
-### anchor 属性
+### dragGroup 属性
 | 参数 | 说明 | 类型 | 可选值 | 默认值 |
 | ---- | ---- | ---- | ---- | ---- |
-| initTop | 拖拽组件默认距离页面顶部高度 | String | —— | 50vh |
-| initLeft | 拖拽组件默认距离页面左侧的距离 | String | —— | 0 |
-| minShowWidth | 隐藏时展示的像素宽度 | Number | —— | 20 |
-| hideMinMargin | 距离边框多少像素时可以隐藏 | Number | —— | 0 |
-| hide | 是否自动隐藏 | Boolean | —— | true |
+| dragDataList | 拖拽组件数据列表 | Array | —— | [] |
+| column | 数据分几列展示 | Number | —— | 1 |
+| columnWidth | 列宽 | String | —— | —— |
+| rowHeight | 行高 | String | —— | —— |
+| type | 拖拽类型：重排resort/替换replace | String | resort/replace | resort |
+
+### dragGroup 插槽
+作用域插槽
+| 名称 | 说明 |
+| ---- | ---- |
+| default | 数据展示插槽，默认为直接展示数据 |
+

@@ -1,18 +1,21 @@
 <template>
   <div id="app">
     <div class="left-container">
-      <el-menu router>
+      <el-menu router :default-openeds="openedMenu">
         <el-menu-item index="/my-vue-component/describe">介绍</el-menu-item>
         <el-submenu index="/my-vue-component/component">
           <template slot="title">
             <span slot="title">组件</span>
           </template>
           <el-menu-item-group>
-            <span slot="title">分组一</span>
+            <span slot="title">数据展示类</span>
             <el-menu-item index="/my-vue-component/component/my-table">table 表格</el-menu-item>
             <el-menu-item index="/my-vue-component/component/my-anchor">anchor 锚点</el-menu-item>
             <el-menu-item index="/my-vue-component/component/my-drag">drag 拖拽</el-menu-item>
             <el-menu-item index="/my-vue-component/component/my-drag-group">dragGroup 拖拽组</el-menu-item>
+          </el-menu-item-group>
+          <el-menu-item-group>
+            <span slot="title">表单类</span>
           </el-menu-item-group>
         </el-submenu>
       </el-menu>
@@ -26,7 +29,12 @@
 <script>
 
 export default {
-  name: 'App'
+  name: 'App',
+  data: function() {
+    return {
+      openedMenu: ['/my-vue-component/component']
+    }
+  }
 }
 </script>
 
