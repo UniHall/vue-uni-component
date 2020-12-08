@@ -568,3 +568,11 @@ export default {
 | ---- | ---- |
 | expand | 展开行作用域插槽，用于定义行展开之后的显示内容，使用示例见展开行表格示例, 提供参数为该行数据row |
 | cell | 单元格的作用域插槽，用于定义单元格内容，提供参数为该行数据row, 该列属性prop |
+
+### table 事件
+| 事件名 | 说明 | 参数 |
+| ---- | ---- | ---- |
+| change-page-size | 更新页容量触发事件， 参数为页容量 | size， Number类型 |
+| change-current-page | 更新页码触发事件，参数为当前页码 | page, Number类型 |
+| selection-change | 单选，多选选中值发生变化时触发事件，参数为全部已选中数据 | selections，Array类型 |
+| handle-button | 点击按钮列时的触发函数， 参数为{key, row}，key为按钮的唯一标识，row为该行数据 | { key, row }, Object类型 |

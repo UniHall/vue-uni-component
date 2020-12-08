@@ -122,6 +122,7 @@ export default {
   height: 100%;
   top: 0;
   left: 0;
+  user-select: none;
 }
 .drag-inner {
   position: fixed;

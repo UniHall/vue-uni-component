@@ -1,9 +1,7 @@
 <template>
-  <div class="container">
-    <div ref="dragContainer" class="my-drag-group" :style="{ 'grid-template-areas': gridAreas }">
-      <div v-for="(dragData, index) in dragList" :key="index" v-drag :style="{ 'grid-area': 'area-' + index }" class="drag-item" onselectstart="return false;">
-        <slot :data="dragData">{{ dragData }}</slot>
-      </div>
+  <div ref="dragContainer" class="my-drag-group" :style="{ 'grid-template-areas': gridAreas }">
+    <div v-for="(dragData, index) in dragList" :key="index" v-drag :style="{ 'grid-area': 'area-' + index }" class="drag-item" onselectstart="return false;">
+      <slot :data="dragData">{{ dragData }}</slot>
     </div>
   </div>
 </template>
@@ -73,11 +71,10 @@ export default {
   data: function() {
     return {
       gridAreas: '',
-      dragList: []
+      dragList: _.cloneDeep(this.dragDataList)
     }
   },
   mounted: function() {
-    this.dragList = _.cloneDeep(this.dragDataList)
     this.$refs.dragContainer.style.setProperty('--columnWidth', this.columnWidth)
     this.$refs.dragContainer.style.setProperty('--rowHeight', this.rowHeight)
     this.joinGridArea()
@@ -166,17 +163,15 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-  .container {
+  .my-drag-group {
     --columnWidth: '100px';
     --rowHeight: '100px';
-    .my-drag-group {
-      display: grid;
-      gap: 5px 5px;
-      justify-content: center;
-      align-content: center;
-      width: fit-content;
-      position: relative;
-    }
+    display: grid;
+    gap: 5px 5px;
+    justify-content: center;
+    align-content: center;
+    width: fit-content;
+    position: relative;
     .drag-item {
       position: relative;
       width: var(--columnWidth);

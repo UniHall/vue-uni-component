@@ -48,3 +48,9 @@ export default {
 | minShowWidth | 隐藏时展示的像素宽度 | Number | —— | 20 |
 | hideMinMargin | 距离边框多少像素时可以隐藏 | Number | —— | 0 |
 | hide | 是否自动隐藏 | Boolean | —— | true |
+
+### drag 事件
+| 事件名 | 说明 | 参数 | 返回值 |
+| ---- | ---- | ---- | ---- |
+| drag-start | 拖拽开始事件，参数为鼠标down事件 | event | —— |
+| drag-end | 拖拽结束事件，参数为鼠标up事件 | event | —— |

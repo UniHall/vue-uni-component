@@ -44,7 +44,7 @@ export default {
 ### dragGroup 属性
 | 参数 | 说明 | 类型 | 可选值 | 默认值 |
 | ---- | ---- | ---- | ---- | ---- |
-| dragDataList | 拖拽组件数据列表 | Array | —— | [] |
+| dragDataList | 拖拽组件数据列表，支持.sync修饰符 | Array | —— | [] |
 | column | 数据分几列展示 | Number | —— | 1 |
 | columnWidth | 列宽 | String | —— | —— |
 | rowHeight | 行高 | String | —— | —— |
@@ -55,4 +55,10 @@ export default {
 | 名称 | 说明 |
 | ---- | ---- |
 | default | 数据展示插槽，默认为直接展示数据 |
+
+### dragGroup 事件
+| 事件名 | 说明 | 参数 | 返回值 |
+| ---- | ---- | ---- | ---- |
+| drag-start | 拖拽开始事件，参数为鼠标down事件 | event | —— |
+| drag-end | 拖拽结束事件，参数为鼠标up事件, 以及当前拖拽数据列表 | event, dragList | —— |
 
