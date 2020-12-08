@@ -9,11 +9,11 @@
 ### 安装
 npm install vue-uni-component
 ### 全局引入
-::: warn
-因为我们使用了element-ui中的组件，使用时需要同时引入element-ui
+::: warning
+因为我们使用了element-ui中的组件，使用时需要同时引入element-ui.
 :::
 
-``` html
+```
 import ElementUI from 'element-ui'
 Vue.use(ElementUI)
 import VueUniComponent from 'vue-uni-component'
@@ -21,8 +21,10 @@ Vue.use(VueUniComponent)
 import 'vue-uni-component/lib/style/index.css'
 ```
 
+
 ### 按需引入
-``` html
+
+``` 
 import ElementUI from 'element-ui'
 Vue.use(ElementUI)
 import { MyTable } from 'vue-uni-component'
