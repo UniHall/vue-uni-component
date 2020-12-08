@@ -9,7 +9,8 @@ import MyDragGroup from './docs/MyDragGroup.md'
 Vue.use(VueRouter)
 const routes = [{
   path: '/',
-  redirect: '/my-vue-component/describe'
+  redirect: '/my-vue-component/describe',
+  component: HomePage
 }, {
   path: '/my-vue-component/describe',
   component: HomePage

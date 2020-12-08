@@ -1,7 +1,24 @@
 {
-  "name": "my-vue-component",
-  "version": "0.1.0",
-  "private": true,
+  "name": "vue-uni-component",
+  "version": "0.0.2-beta1",
+  "private": false,
+  "main": "lib/index.js",
+  "style": "lib/style/index.css",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:UniHall/my-vue-component.git"
+  },
+  "keywords": [
+    "vue",
+    "element"
+  ],
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  },
+  "files": [
+    "lib"
+  ],
   "scripts": {
     "serve": "vue-cli-service serve --config vue.config.js --open",
     "build": "vue-cli-service build",
