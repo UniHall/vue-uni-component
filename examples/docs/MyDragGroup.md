@@ -36,6 +36,9 @@ export default {
 .drag-data-div {
   background-color: green;
   color: #FFFFFF;
+  width: 100px;
+  height: 100px;
+  line-height: 100px;
 }
 </style>
 ```

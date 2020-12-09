@@ -55,12 +55,12 @@ export default {
     // 列宽
     columnWidth: {
       type: String,
-      default: '100px'
+      default: 'auto'
     },
     // 行高
     rowHeight: {
       type: String,
-      default: '100px'
+      default: 'auto'
     },
     // 拖拽类型：重排resort/替换replace
     type: {
@@ -164,8 +164,8 @@ export default {
 </script>
 <style lang="scss" scoped>
   .my-drag-group {
-    --columnWidth: '100px';
-    --rowHeight: '100px';
+    --columnWidth: 'auto';
+    --rowHeight: 'auto';
     display: grid;
     gap: 5px 5px;
     justify-content: center;
