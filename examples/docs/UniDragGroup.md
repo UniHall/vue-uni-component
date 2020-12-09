@@ -1,11 +1,11 @@
-## MyDrag 拖拽组件使用说明
+## UniDrag 拖拽组件使用说明
 ### 普通拖拽
 ::: demo
 ```html
 <template>
-  <my-drag-group :column="3" :drag-data-list.sync="dragDataList" @drag-start="dragStart" @drag-end="dragEnd">
+  <uni-drag-group :column="3" :drag-data-list.sync="dragDataList" @drag-start="dragStart" @drag-end="dragEnd">
     <template v-slot:default="dragData"><div class="drag-data-div" >这是{{ dragData.data }}数据</div></template>
-  </my-drag-group>
+  </uni-drag-group>
 </template>
 <script>
 export default {

@@ -1,5 +1,5 @@
 <template>
-  <div ref="dragContainer" class="my-drag-group" :style="{ 'grid-template-areas': gridAreas }">
+  <div ref="dragContainer" class="uni-drag-group" :style="{ 'grid-template-areas': gridAreas }">
     <div v-for="(dragData, index) in dragList" :key="index" v-drag :style="{ 'grid-area': 'area-' + index }" class="drag-item" onselectstart="return false;">
       <slot :data="dragData">{{ dragData }}</slot>
     </div>
@@ -8,7 +8,7 @@
 <script>
 import _ from 'lodash'
 export default {
-  name: 'MyDragGroup',
+  name: 'UniDragGroup',
   directives: {
     drag: {
       bind: function(el, binding, vnode) {
@@ -163,7 +163,7 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-  .my-drag-group {
+  .uni-drag-group {
     --columnWidth: 'auto';
     --rowHeight: 'auto';
     display: grid;

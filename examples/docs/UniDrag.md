@@ -1,4 +1,4 @@
-## MyDrag 拖拽组件使用说明
+## UniDrag 拖拽组件使用说明
 ### 普通拖拽
 ::: tip
 您可以拖拽左侧的dragMe蓝色框，进行组件的拖拽。拖拽组件可以帮您实现悬浮框移动到边框自动隐藏的功能，如果你需要进行分组，您可以下移到dragGroup组件进行试用。
@@ -6,9 +6,9 @@
 ::: demo
 ```html
 <template>
-  <my-drag @drag-start="dragStart" @drag-end="dragEnd">
+  <uni-drag @drag-start="dragStart" @drag-end="dragEnd">
     <div class="test-drag">dragMe</div>
-  </my-drag>
+  </uni-drag>
 </template>
 <script>
 export default {

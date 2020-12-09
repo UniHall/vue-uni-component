@@ -1,9 +1,9 @@
-## MyTable 表格组件使用说明
+## UniTable 表格组件使用说明
 ### 普通表格
 ::: demo
 ```html
 <template>
-  <my-table :data="data" :column-list="columnList" :dict-list="dict" />
+  <uni-table :data="data" :column-list="columnList" :dict-list="dict" />
 </template>
 <script>
 export default {
@@ -46,7 +46,7 @@ export default {
 ::: demo
 ```html
 <template>
-  <my-table
+  <uni-table
     :data="data"
     :column-list="columnList"
     :dict-list="dict"
@@ -125,7 +125,7 @@ export default {
 ::: demo
 ```html
 <template>
-  <my-table
+  <uni-table
     :data="data"
     :column-list="columnList"
     :dict-list="dict"
@@ -224,7 +224,7 @@ export default {
 ::: demo
 ```html
 <template>
-  <my-table
+  <uni-table
     :data="data1"
     :column-list="columnList"
     :dict-list="dict"
@@ -320,7 +320,7 @@ export default {
 ::: demo
 ```html
 <template>
-  <my-table
+  <uni-table
     :data="data2"
     :column-list="columnList"
     :row-key="getRowKey"
@@ -417,9 +417,9 @@ export default {
 ::: demo
 ```html
 <template>
-  <my-table :data="data" :column-list="columnList" :dict-list="dict">
+  <uni-table :data="data" :column-list="columnList" :dict-list="dict">
     <template v-slot:expand="expandScope">{{ expandScope.row }}</template>
-  </my-table>
+  </uni-table>
 </template>
 <script>
 export default {
@@ -464,7 +464,7 @@ export default {
 ::: demo
 ```html
 <template>
-  <my-table :data="data" :column-list="columnList" />
+  <uni-table :data="data" :column-list="columnList" />
 </template>
 <script>
 export default {

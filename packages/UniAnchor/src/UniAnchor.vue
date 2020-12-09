@@ -1,7 +1,7 @@
 <template>
   <ul
     v-if="anchorList.length !== 0"
-    :class="{ 'my-anchor': true, 'full-name': showFullName, 'short-name': !showFullName, 'opacity-ul': opacity}"
+    :class="{ 'uni-anchor': true, 'full-name': showFullName, 'short-name': !showFullName, 'opacity-ul': opacity}"
     :style="{ top: position === 'top' ? 0 : (position === 'bottom' ? '90%' : '50%')}"
   >
     <li v-if="anchorList.length > 0" @click="showFullName = !showFullName">
@@ -16,7 +16,7 @@
   <div v-else-if="openBackTop" @click="toTop">
     <slot>
       <span
-        :class="{ 'my-anchor': true, 'opacity-ul': opacity, 'only-back-top': true }"
+        :class="{ 'uni-anchor': true, 'opacity-ul': opacity, 'only-back-top': true }"
         :style="{ top: position === 'top' ? '10%' : (position === 'bottom' ? '90%' : '50%')}"
       >
         顶部
@@ -26,7 +26,7 @@
 </template>
 <script>
 export default {
-  name: 'MyAnchor',
+  name: 'UniAnchor',
   props: {
     // 锚点列表
     anchorList: {
@@ -215,7 +215,7 @@ export default {
 </script>
 <style lang="scss" scoped>
   @import '~@/style/mixin.scss';
-  .my-anchor {
+  .uni-anchor {
     list-style: none;
     background-color: #606266;
     font-family: MicrosoftYaHei;
@@ -229,16 +229,16 @@ export default {
   .opacity-ul {
     opacity: 0.6;
   }
-  .my-anchor li {
+  .uni-anchor li {
     @include text-overflow;
     line-height: 26px;
     padding: 0 3px;
     cursor: pointer;
   }
-  .my-anchor li:hover {
+  .uni-anchor li:hover {
     background-color: #409EFF;
   }
-  .my-anchor li.actived{
+  .uni-anchor li.actived{
     background-color: #1891FF;
   }
   .none-background {

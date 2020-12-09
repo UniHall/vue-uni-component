@@ -5,7 +5,7 @@
 </template>
 <script>
 export default {
-  name: 'MyDrag',
+  name: 'UniDrag',
   directives: {
     drag: {
       bind: function(el, binding, vnode) {
@@ -114,7 +114,7 @@ export default {
 }
 </script>
 <style scoped>
-.my-drag {
+.uni-drag {
   position: absolute;
   overflow: hidden;
   z-index: 100;

@@ -1,4 +1,4 @@
-## MyAnchor 锚点组件使用说明
+## UniAnchor 锚点组件使用说明
 ### 仅有返回顶部的anchor
 ::: tip
 仅有返回顶部的anchor，则会只有一个返回顶部按钮
@@ -6,7 +6,7 @@
 ::: demo
 ```html
 <template>
-  <my-anchor position="bottom" />
+  <uni-anchor position="bottom" />
 </template>
 ```
 :::
@@ -22,11 +22,11 @@
 ```html
 <template>
   <div>
-    <my-anchor :anchor-list="anchorList" >
+    <uni-anchor :anchor-list="anchorList" >
       <template v-slot:backTopAnchorSlot>
         <span>UP</span>
       </template>
-    </my-anchor>
+    </uni-anchor>
   </div>
 </template>
 <script>
@@ -56,9 +56,9 @@
 ::: demo
 ```html
 <template>
-  <my-anchor>
+  <uni-anchor>
     <div class="top-cus">UP</div>
-  </my-anchor>
+  </uni-anchor>
 </template>
 <style scoped>
 .top-cus {

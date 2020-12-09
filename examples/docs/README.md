@@ -27,7 +27,7 @@ import 'vue-uni-component/lib/style/index.css'
 ``` 
 import ElementUI from 'element-ui'
 Vue.use(ElementUI)
-import { MyTable } from 'vue-uni-component'
-Vue.use(MyTable)
+import { UniTable } from 'vue-uni-component'
+Vue.use(UniTable)
 import 'vue-uni-component/lib/style/index.css'
 ```

@@ -1,5 +1,5 @@
 <template>
-  <div class="my-table">
+  <div class="uni-table">
     <el-table
       border
       :style="tableStyle"
@@ -136,7 +136,7 @@
 <script>
 import { filterDictNameByCode, formatMoneyStr } from '@/commonJs/common.js'
 export default {
-  name: 'MyTable',
+  name: 'UniTable',
   props: {
     // 表格当前页面展示的数据
     data: {

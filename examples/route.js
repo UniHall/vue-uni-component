@@ -1,10 +1,10 @@
 import VueRouter from 'vue-router'
 import Vue from 'vue'
 import HomePage from './docs/README.md'
-import MyTable from './docs/MyTable.md'
-import MyAnchor from './docs/MyAnchor.md'
-import MyDrag from './docs/MyDrag.md'
-import MyDragGroup from './docs/MyDragGroup.md'
+import UniTable from './docs/UniTable.md'
+import UniAnchor from './docs/UniAnchor.md'
+import UniDrag from './docs/UniDrag.md'
+import UniDragGroup from './docs/UniDragGroup.md'
 
 Vue.use(VueRouter)
 const routes = [{
@@ -15,21 +15,21 @@ const routes = [{
   path: '/my-vue-component/describe',
   component: HomePage
 }, {
-  path: '/my-vue-component/component/my-table',
-  component: MyTable,
-  name: 'MyTable'
+  path: '/my-vue-component/component/uni-table',
+  component: UniTable,
+  name: 'UniTable'
 }, {
-  path: '/my-vue-component/component/my-anchor',
-  component: MyAnchor,
-  name: 'MyAnchor'
+  path: '/my-vue-component/component/uni-anchor',
+  component: UniAnchor,
+  name: 'UniAnchor'
 }, {
-  path: '/my-vue-component/component/my-drag',
-  component: MyDrag,
-  name: 'MyDrag'
+  path: '/my-vue-component/component/uni-drag',
+  component: UniDrag,
+  name: 'UniDrag'
 }, {
-  path: '/my-vue-component/component/my-drag-group',
-  component: MyDragGroup,
-  name: 'MyDragGroup'
+  path: '/my-vue-component/component/uni-drag-group',
+  component: UniDragGroup,
+  name: 'UniDragGroup'
 }]
 const router = new VueRouter({
   routes,

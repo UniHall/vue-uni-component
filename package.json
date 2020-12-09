@@ -1,6 +1,6 @@
 {
   "name": "vue-uni-component",
-  "version": "0.0.2-beta1",
+  "version": "0.0.2-beta2",
   "private": false,
   "main": "lib/index.js",
   "style": "lib/style/index.css",

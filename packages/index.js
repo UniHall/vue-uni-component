@@ -3,17 +3,17 @@ import 'element-ui/lib/theme-chalk/index.css'
 import Vue from 'vue'
 Vue.use(ElementUI, { size: 'small' })
 
-import MyTable from '@/MyTable'
-import MyAnchor from '@/MyAnchor'
-import MyDrag from '@/MyDrag'
-import MyDragGroup from '@/MyDragGroup'
+import UniTable from '@/UniTable'
+import UniAnchor from '@/UniAnchor'
+import UniDrag from '@/UniDrag'
+import UniDragGroup from '@/UniDragGroup'
 import './style/common.scss'
 
 const components = [
-  MyTable,
-  MyAnchor,
-  MyDrag,
-  MyDragGroup
+  UniTable,
+  UniAnchor,
+  UniDrag,
+  UniDragGroup
 ]
 const install = function(Vue) {
   if (install.installed) return
@@ -25,10 +25,10 @@ if (typeof window !== 'undefined' && window.Vue) {
 }
 export {
   install,
-  MyTable,
-  MyAnchor,
-  MyDrag,
-  MyDragGroup
+  UniTable,
+  UniAnchor,
+  UniDrag,
+  UniDragGroup
 }
 export default {
   install,

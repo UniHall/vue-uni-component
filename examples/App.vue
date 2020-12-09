@@ -9,10 +9,10 @@
           </template>
           <el-menu-item-group>
             <span slot="title">数据展示类</span>
-            <el-menu-item index="/my-vue-component/component/my-table">table 表格</el-menu-item>
-            <el-menu-item index="/my-vue-component/component/my-anchor">anchor 锚点</el-menu-item>
-            <el-menu-item index="/my-vue-component/component/my-drag">drag 拖拽</el-menu-item>
-            <el-menu-item index="/my-vue-component/component/my-drag-group">dragGroup 拖拽组</el-menu-item>
+            <el-menu-item index="/my-vue-component/component/uni-table">table 表格</el-menu-item>
+            <el-menu-item index="/my-vue-component/component/uni-anchor">anchor 锚点</el-menu-item>
+            <el-menu-item index="/my-vue-component/component/uni-drag">drag 拖拽</el-menu-item>
+            <el-menu-item index="/my-vue-component/component/uni-drag-group">dragGroup 拖拽组</el-menu-item>
           </el-menu-item-group>
           <el-menu-item-group>
             <span slot="title">表单类</span>
