@@ -22,3 +22,41 @@ export function formatMoneyStr(s, n) {
   }
   return t.split('').reverse().join('') + (r ? '.' + r : '')
 }
+
+/**
+ * 将list[Object]类型数据转化为list[{children:[]}]格式
+ * @param {Array} normalList list[Object]类型的原list
+ * @param {String} parentIdName list[object]中Object标记父节点关联关系的字段名，如'parentId','parentCode'等
+ * @param {Array<String>} rootCodeList 若想仅过滤出parentId为某些值的list则需要传此值
+ */
+export function parseTreeData(normalList, parentIdName, rootCodeList) {
+  var treeData = []
+  if (normalList.length > 0) {
+    for (let index = 0; index < normalList.length; index++) {
+      const n = normalList[index]
+      if (!n[parentIdName] || (rootCodeList && rootCodeList.includes(n.code))) {
+        treeData.push(n)
+      }
+    }
+    parseChildTree(normalList, treeData, parentIdName)
+  }
+  return treeData
+}
+
+export function parseChildTree(normalList, parentList, parentIdName) {
+  if (normalList.length !== 0 && parentList.length !== 0) {
+    for (let index = 0; index < parentList.length; index++) {
+      const parentElement = parentList[index]
+      for (let childIndex = 0; childIndex < normalList.length; childIndex++) {
+        const childElement = normalList[childIndex]
+        if (parentElement.id === childElement[parentIdName]) {
+          parentElement.children = parentElement.children || []
+          parentElement.children.push(childElement)
+        }
+      }
+      if (normalList.length > 0 && parentElement.children && parentElement.children.length > 0) {
+        parseChildTree(normalList, parentElement.children, parentIdName)
+      }
+    }
+  }
+}
