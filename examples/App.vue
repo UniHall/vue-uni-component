@@ -54,6 +54,8 @@ body {
 }
 .left-container {
   width: 200px;
+  flex-grow: 0;
+  flex-shrink: 0;
 }
 .right-container {
   flex-grow: 1;
