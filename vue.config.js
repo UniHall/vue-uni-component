@@ -4,6 +4,9 @@ const path = require('path')
 function resolve(dir) {
   return path.resolve(__dirname, dir)
 }
+function capitalize(str) {
+  return str.replace(/\B([A-Z])/g, '-$1').toLowerCase()
+}
 const join = path.join
 function getEntries(path) {
   const files = fs.readdirSync(resolve(path))
@@ -12,6 +15,7 @@ function getEntries(path) {
     const isDir = fs.statSync(itemPath).isDirectory()
     if (isDir) {
       if (fs.existsSync(join(itemPath, 'index.js'))) {
+        item = capitalize(item)
         ret[item] = resolve(join(itemPath, 'index.js'))
       }
     } else {

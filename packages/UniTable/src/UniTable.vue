@@ -442,3 +442,71 @@ export default {
   }
 }
 </script>
+<style lang="scss" scoped>
+$font-size: 14px;
+.el-pagination {
+  padding: 15px;
+  text-align: center;
+  background-color: #FFFFFF;
+}
+.el-pagination.is-background .btn-next,
+.el-pagination.is-background .btn-prev,
+.el-pagination.is-background .el-pager li {
+  background-color: #FFFFFF !important;
+}
+.el-pagination.is-background .el-pager li:not(.disabled).active {
+  background-color: #1891FF !important;
+  color: #FFF;
+}
+.el-pagination.is-background .el-pager li:not(.disabled).active {
+  border-radius: 4px;
+}
+
+/* 小分页select大小调整 */
+.el-pagination__sizes .el-select--mini .el-input__inner {
+  height: 22px;
+  border-radius: 0 !important;
+}
+.el-table .common-table-cell {
+  padding: 3px;
+  line-height: 25px;
+  font-size: $font-size;
+}
+.el-table .common-header-cell {
+  background: #EDF1F5;
+  color: #303133;
+  padding: 3px;
+  line-height: 25px;
+  font-size: $font-size;
+}
+
+.el-table .table-cell {
+  text-align: center;
+  padding: 3px;
+  line-height: 25px;
+  font-size: $font-size;
+}
+.el-table .header-cell {
+  background: #EDF1F5;
+  color: #303133;
+  text-align: center;
+  padding: 3px;
+  line-height: 25px;
+  font-size: $font-size;
+}
+.el-table .table-cell .el-button--text {
+  padding: 0;
+}
+.common-table-span {
+  display: inline-block;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  width: 100%;
+}
+.common-cus-popper {
+  max-width: 300px;
+  max-height: 60px;
+  overflow: auto;
+}
+</style>

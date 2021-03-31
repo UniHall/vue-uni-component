@@ -29,5 +29,23 @@ import ElementUI from 'element-ui'
 Vue.use(ElementUI)
 import { UniTable } from 'vue-uni-component'
 Vue.use(UniTable)
+// 你可以 1、使用下面的代码引入全局公共样式；
 import 'vue-uni-component/lib/style/index.css'
+
+// 2、也可以仅使用响应组件的样式
+// a.需要安装npm包 npm install babel-plugin-component -D
+// b.修改babel.config.js或者.babelrc文件，修改代码如下：
+plugins: [
+  [
+    'component',
+    {
+      libraryName: 'vue-uni-component',
+      styleLibrary: {
+        name: 'style',
+        base: false
+      }
+    }
+  ]
+]
+
 ```
