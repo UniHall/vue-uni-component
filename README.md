@@ -42,8 +42,7 @@ plugins: [
       libraryName: 'vue-uni-component',
       styleLibrary: {
         name: 'style',
-        base: false,
-        mixin: true
+        base: false
       }
     }
   ]
