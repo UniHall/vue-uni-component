@@ -105,7 +105,7 @@ export default {
         // 当前元素的x坐标比需要隐藏的x坐标大时，隐藏drag组件
         document.querySelector('.drag-inner').style.left = document.documentElement.clientWidth - this.minShowWidth + 'px'
       }
-      if (document.querySelector('.drag-inner').getBoundingClientRect().bottom > document.documentElement.cilentHeight - this.hideMinMargin) {
+      if (document.querySelector('.drag-inner').getBoundingClientRect().bottom > document.documentElement.clientHeight - this.hideMinMargin) {
         // 如果当前元素的y坐标大于需要隐藏的y坐标时，隐藏drag组件
         document.querySelector('.drag-inner').style.top = document.documentElement.clientHeight - this.minShowWidth + 'px'
       }
