@@ -9,30 +9,31 @@ import UniDragGroup from './docs/UniDragGroup.md'
 Vue.use(VueRouter)
 const routes = [{
   path: '/',
-  redirect: '/my-vue-component/describe',
+  redirect: '/describe',
   component: HomePage
 }, {
-  path: '/my-vue-component/describe',
+  path: '/describe',
   component: HomePage
 }, {
-  path: '/my-vue-component/component/uni-table',
+  path: '/component/uni-table',
   component: UniTable,
   name: 'UniTable'
 }, {
-  path: '/my-vue-component/component/uni-anchor',
+  path: '/component/uni-anchor',
   component: UniAnchor,
   name: 'UniAnchor'
 }, {
-  path: '/my-vue-component/component/uni-drag',
+  path: '/component/uni-drag',
   component: UniDrag,
   name: 'UniDrag'
 }, {
-  path: '/my-vue-component/component/uni-drag-group',
+  path: '/component/uni-drag-group',
   component: UniDragGroup,
   name: 'UniDragGroup'
 }]
 const router = new VueRouter({
   routes,
+  base: '/my-vue-component',
   mode: 'history'
 })
 export default router

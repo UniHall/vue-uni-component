@@ -6,8 +6,8 @@ function resolve(dir) {
 
 // 判断参数是打包examples,设置output出口为dist
 const docConfig = {
-  publicPath: '/dist',
-  outputDir: 'dist',
+  publicPath: '/my-vue-component',
+  outputDir: 'my-vue-component',
   assetsDir: 'static',
   lintOnSave: false,
   productionSourceMap: false,

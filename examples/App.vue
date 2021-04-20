@@ -2,17 +2,17 @@
   <div id="app">
     <div class="left-container">
       <el-menu router :default-openeds="openedMenu">
-        <el-menu-item index="/my-vue-component/describe">介绍</el-menu-item>
-        <el-submenu index="/my-vue-component/component">
+        <el-menu-item index="/describe">介绍</el-menu-item>
+        <el-submenu index="/component">
           <template slot="title">
             <span slot="title">组件</span>
           </template>
           <el-menu-item-group>
             <span slot="title">数据展示类</span>
-            <el-menu-item index="/my-vue-component/component/uni-table">table 表格</el-menu-item>
-            <el-menu-item index="/my-vue-component/component/uni-anchor">anchor 锚点</el-menu-item>
-            <el-menu-item index="/my-vue-component/component/uni-drag">drag 拖拽</el-menu-item>
-            <el-menu-item index="/my-vue-component/component/uni-drag-group">dragGroup 拖拽组</el-menu-item>
+            <el-menu-item index="/component/uni-table">table 表格</el-menu-item>
+            <el-menu-item index="/component/uni-anchor">anchor 锚点</el-menu-item>
+            <el-menu-item index="/component/uni-drag">drag 拖拽</el-menu-item>
+            <el-menu-item index="/component/uni-drag-group">dragGroup 拖拽组</el-menu-item>
           </el-menu-item-group>
           <el-menu-item-group>
             <span slot="title">表单类</span>
@@ -32,7 +32,7 @@ export default {
   name: 'App',
   data: function() {
     return {
-      openedMenu: ['/my-vue-component/component']
+      openedMenu: ['/component']
     }
   }
 }
