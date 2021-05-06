@@ -227,7 +227,7 @@ export default {
     }
   },
   watch: {
-    data: function(newVal) {
+    data: function() {
       this.initMergeRow()
     }
   },
@@ -356,7 +356,7 @@ export default {
       // 列合并
       if (this.mergeColIndex && this.mergeColIndex.length > 0) {
         var num = 1
-        // 当前列的index在columnList中对应的index值，如果表格还需要展示复选框，则需要将index 再 减去1
+        // 当前列的index在columnList中对应的index值
         const notOperationIndex = this.columnList[this.columnList.length - 1].operations && this.columnList[this.columnList.length - 1].operations.length > 0 ? this.columnList.length - 2 : this.columnList.length - 1
         const endIndex = this.mergeColIndex.length > 1 ? this.mergeColIndex[1] : notOperationIndex
         // 如果当前列不在columnList中或者当前列超出了需合并列的index，则不进行任何操作

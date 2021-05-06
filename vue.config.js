@@ -95,7 +95,11 @@ const buildConfig = {
     },
     output: {
       filename: '[name].js',
-      libraryTarget: 'commonjs2'
+      libraryTarget: 'umd',
+      libraryExport: 'default',
+      library: '[name]',
+      umdNamedDefine: true,
+      globalObject: 'typeof self !== \'undefined\' ? self : this'
     },
     resolve: {
       alias: {
