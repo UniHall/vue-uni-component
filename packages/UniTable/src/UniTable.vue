@@ -117,7 +117,7 @@
       </el-table-column>
     </el-table>
     <!-- 允许用户直接自定义完整的table，不使用组件渲染的组件 -->
-    <slot name="tableSlot" />
+    <slot name="table-slot" />
     <!-- 分页 -->
     <el-pagination
       v-if="pageable !== null"
